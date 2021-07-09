@@ -18,13 +18,17 @@ class BoggleAppTestCase(TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True
 
+
     def test_homepage(self):
         """Make sure information is in the session and HTML is displayed"""
 
         with self.client as client:
             response = client.get('/')
-            ...
+            html = response.get_data(as_text=True)
+
             # test that you're getting a template
+            self.assertIn('<button class="word-input-btn">Go</button>', html)
+
 
     def test_api_new_game(self):
         """Test starting a new game."""

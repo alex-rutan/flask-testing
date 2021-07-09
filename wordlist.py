@@ -30,11 +30,10 @@ class WordList:
         """Is word in word list?
 
             >>> wl = WordList("test_dictionary.txt")
-            >>> wl.words == {'CAT', 'DOG'}
+            >>> wl.check_word("CAT")
             True
-            >>> word = "CAT"
-            >>> word in wl.words
-            True
+            >>> wl.check_word("TURTLE")
+            False
         """
 
         return word in self.words
