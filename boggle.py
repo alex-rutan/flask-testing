@@ -110,7 +110,7 @@ class BoggleGame():
     def is_word_in_word_list(self, word):
         """Return True/False if the word is in our word list."""
 
-        return self.word_list.check_word(word)
+        return self.word_list.check_word(word) 
 
     def check_word_on_board(self, word):
         """Can word be found in board? Returns True/False.
