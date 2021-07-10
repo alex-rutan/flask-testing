@@ -4,6 +4,8 @@ from flask import json
 
 from app import app, games
 
+from boggle import BoggleGame
+
 # Make Flask errors be real errors, not HTML pages with error info
 app.config['TESTING'] = True
 
@@ -42,3 +44,16 @@ class BoggleAppTestCase(TestCase):
             self.assertTrue(response_json_parsed["board"][0][0])
             self.assertTrue(games[response_json_parsed["gameId"]])
 
+    def test_score_word(self):
+        """"""
+
+        game = BoggleGame()
+        game.board[0] = ["C", "A", "T", "A", "B"]
+        games["test_game_id"] = game
+        word = "CAT"
+
+        with self.client as client:
+            response = client.post(
+                "/api/score-word", json={'game_id': "test_game_id", 'word': word})
+
+            self.assertTrue(game.check_word_on_board(word))
