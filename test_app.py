@@ -37,15 +37,15 @@ class BoggleAppTestCase(TestCase):
 
         with self.client as client:
             response = client.get('/api/new-game')
-            data = response.get_data(as_text=True)
-            response_json_parsed = json.loads(data)
+            game_info = response.json
 
-            self.assertTrue(response_json_parsed["gameId"])
-            self.assertTrue(response_json_parsed["board"][0][0])
-            self.assertTrue(games[response_json_parsed["gameId"]])
+            self.assertTrue(game_info["gameId"])
+            self.assertTrue(game_info["board"][0][0])
+            self.assertTrue(games[game_info["gameId"]])
 
     def test_score_word(self):
-        """"""
+        """Tests that our score-word route is functional given a fixed game_id and word, 
+        and a preset test board"""
 
         game = BoggleGame()
         game.board[0] = ["C", "A", "T", "A", "B"]
@@ -56,4 +56,5 @@ class BoggleAppTestCase(TestCase):
             response = client.post(
                 "/api/score-word", json={'game_id': "test_game_id", 'word': word})
 
-            self.assertTrue(game.check_word_on_board(word))
+            self.assertEqual(response.json, {"result": "ok"})
+    

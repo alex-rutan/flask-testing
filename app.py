@@ -31,13 +31,18 @@ def new_game():
 
 @app.route("/api/score-word", methods=["POST"])
 def score_word():
+    """Function takes in a post request with JSON in its body of data. 
+    It checks that the word is valid in terms of being in the word list
+    and being on the board. Returns JSON with a "key" of result."""
 
     word = request.json["word"]
     game_id = request.json["game_id"]
     game = games[game_id]
-    if game.is_word_in_word_list(word):
-        if not game.check_word_on_board(word):
-            return jsonify({"result": "not-on-board"})
-        else:
-            return jsonify({"result": "ok"})
-    return jsonify({"result": "not-word"})
+    
+    if not game.is_word_in_word_list(word):
+        return jsonify({"result": "not-word"})
+    if not game.check_word_on_board(word):
+        return jsonify({"result": "not-on-board"})
+       
+    return jsonify({"result": "ok"})
+    

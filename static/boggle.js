@@ -26,19 +26,24 @@ function displayBoard(board) {
   // loop over board and create the DOM tr/td structure
 }
 
-start();
 
 
 
-$(".word-input-btn").on("click", checkWord)
+/** Prevents form from reloading, so we can use AJAX to send post request.
+ * Sends back response.data to the server.
+ */
 
 async function checkWord(evt) {
   evt.preventDefault();
 
   let word = $wordInput.val()
   let response = await axios.post("/api/score-word", {"game_id": gameId, "word": word});
-  console.log(response);
-  return response;
-  
-
+  return response.data;
 }
+
+/** Click handler for the add-word button*/
+
+$(".word-input-btn").on("click", checkWord)
+
+
+start();
